@@ -5,4 +5,13 @@ const App=express()
 App.get('/',(req,res)=>{
     res.end("server")
 })
+App.get('/api/users',(req,res)=>{
+    MongoClient.connect(Mongouri,(err,client)=>{
+        if(err)
+        {
+            throw err;
+        }
+        console.log('connected to db')
+    })
+})
 App.listen(3001)
