@@ -34,3 +34,6 @@ const query=await collection.insertOne({
     lastname:'Jones'
 })
 and in btn onClick function just write axios.get('link of what u write i server file like api/users')
+
+=>Mongoose:
+Mongoose provides a straight-forward, schema-based solution to model your application data. It includes built-in type casting, validation, query building, business logic hooks and more, out of the box.

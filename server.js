@@ -1,36 +1,40 @@
+//POST WITH MONGOOSE
 const express=require('express')
-const {MongoClient}=require('mongodb')
-const Mongouri='mongodb+srv://admin:123@cluster0.kbpqc3o.mongodb.net/?retryWrites=true&w=majority';
 const App=express()
-const client=new MongoClient(Mongouri)
-App.get('/',(req,res)=>{
-    res.end("server")
+const mongoose=require('mongoose')
+const Mongouri='mongodb+srv://admin:123@cluster0.kbpqc3o.mongodb.net/?retryWrites=true&w=majority';
+mongoose.connect(Mongouri)
+const bodyParser = require('body-parser');
+App.use(bodyParser.json());
+const carSchema=mongoose.Schema({
+    brand: String,
+    model:String,
+    year: Number,
+    avail: Boolean
 })
-App.get('/api/users',async(req,res)=>{
-    console.log("gg")
-    try{
-        await client.connect() 
-        const database=client.db('MyDB')
-        const collection=database.collection('users')
-        const query=await collection.insertOne({
-            name:'Francis',
-            lastname:'Jones'
-        })
-        res.status(200).json({nice:'nice'})
-    }
-    catch(error){
-        throw error
-    }
-    finally{
-        await client.close()
-        console.log("all is done")
-    }
-    // MongoClient.connect(Mongouri,(err,client)=>{
-    //     if(err)
-    //     {
-    //         throw err;
-    //     }
-    //     console.log('connected to db')
-    // })
+const car=mongoose.model('car',carSchema);
+App.post('/api/cars',(req,res)=>{
+    const addCar=new car({
+        brand:req.body.brand,
+        model:req.body.model,
+        year: req.body.year,
+        avail: req.body.avail
+    })
+    addCar.save((err,doc)=>{
+        if(err)
+        {
+            return console.log(err)
+        }
+        res.sendStatus(200).json(doc)
+    })
+})
+App.get('/api/getCars',(req,res)=>{
+    car.find((err,doc)=>{
+        if(err)
+        {
+            console.log(err)   
+        }
+        res.json(doc)
+    })
 })
 App.listen(3001)
