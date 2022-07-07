@@ -44,4 +44,13 @@ App.post('/api/removeCars',(req,res)=>{
         res.json(doc)
     })
 })
+App.post('/api/updateCar',(req,res)=>{
+    const brand=req.body.brand
+    car.updateOne({brand:brand},(err,doc)=>{
+        if(err){
+            console.log("errr")
+        }
+        res.json(doc)
+    })
+})
 App.listen(3001)

@@ -26,12 +26,18 @@ const addUser=()=>{
     axios.post('/api/removeCars',{brand:'Vigo'})
     .then(()=>getCars())
   }
+  //Update Through Mongoose
+  const updateCar=()=>{
+    axios.post('/api/updateCar',{brand:"Ferrari"})
+    .then(()=>getCars())
+  }
   return (
     <div className="App">
       <button onClick={addUser}>
       Add Car</button>
       <button onClick={getCars}>Get Cars</button>
       <button onClick={removeCar}>RemoveCar</button>
+      <button onClick={updateCar}>Update Car</button>
       {cars ? cars.map((item)=>(
         <div>{item.brand}</div>
       )):<h1>gg</h1>}
