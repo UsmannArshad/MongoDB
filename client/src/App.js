@@ -22,11 +22,16 @@ const addUser=()=>{
     .then((response)=>setCars(response.data))
   }
   //Delete THROUGH MONGOOSE
+  const removeCar=()=>{
+    axios.post('/api/removeCars',{brand:'Vigo'})
+    .then(()=>getCars())
+  }
   return (
     <div className="App">
       <button onClick={addUser}>
       Add Car</button>
       <button onClick={getCars}>Get Cars</button>
+      <button onClick={removeCar}>RemoveCar</button>
       {cars ? cars.map((item)=>(
         <div>{item.brand}</div>
       )):<h1>gg</h1>}

@@ -37,4 +37,11 @@ App.get('/api/getCars',(req,res)=>{
         res.json(doc)
     })
 })
+App.post('/api/removeCars',(req,res)=>{
+    const brand=req.body.brand
+    car.findOneAndDelete({brand:brand},(err,doc)=>{
+        if(err){return console.log(err)}
+        res.json(doc)
+    })
+})
 App.listen(3001)
